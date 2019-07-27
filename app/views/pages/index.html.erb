@@ -1,0 +1,16 @@
+<h2>Stories</h2>
+<div class="stories-container">
+</div>
+
+<%= javascript_tag do %>
+  document.addEventListener('DOMContentLoaded', (e)=>{
+    fetch('http://localhost:3000/api/v1/stories')
+    .then(response => response.json())
+    .then((data) => {
+      container = document.querySelector('.stories-container');
+      data['stories'].forEach((story) => {
+        container.insertAdjacentHTML('afterbegin', `<p>${story['name']}:<br/>${story['text']}</p>`);
+      });
+    });
+  });
+<% end %>
