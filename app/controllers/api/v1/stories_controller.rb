@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::StoriesController < Api::V1::BaseController
-  skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
-  before_action :find_story, only: [:show, :update]
+  skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy, :create_comment]
+  before_action :find_story, only: [:show, :update, :create_comment]
 
   def index
     @stories = Story.order(created_at: :desc)
@@ -37,6 +37,16 @@ class Api::V1::StoriesController < Api::V1::BaseController
     # # else
     # #   render_error
     # # end
+  end
+
+  def create_comment
+    @comment = Comment.new(params.require(:comment).permit(:name, :content))
+    @comment.story = @story
+    if @comment.save
+      render :show, status: :created
+    else
+      render_error
+    end
   end
 
   private

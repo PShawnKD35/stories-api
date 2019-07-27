@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :stories, only: [:index, :show, :create, :update, :destroy]
+      post 'stories/:id/comments', to: 'stories#create_comment', as: :comment
     end
   end
 end
