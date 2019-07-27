@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::StoriesController < Api::V1::BaseController
-  skip_before_action :verify_authenticity_token, only: [:create, :update]
+  skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
   before_action :find_story, only: [:show, :update]
 
   def index
@@ -23,14 +23,20 @@ class Api::V1::StoriesController < Api::V1::BaseController
 
   def update
     if @story.update(permit_story)
-      render :show, status: :updated
+      render :show
     else
       render_error
     end
   end
 
   def destroy
-    puts 'Oh OK'
+    render json: { message: "Nice Try!" }
+    # head :no_content
+    # # if @story.destroy
+    # #   render :index
+    # # else
+    # #   render_error
+    # # end
   end
 
   private
