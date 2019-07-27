@@ -15,7 +15,7 @@ Story.destroy_all if Rails.env.development?
   story.save
 end
 
-3.times do
+15.times do
   comment = Comment.new
   comment.story_id = rand(1..Story.count)
   comment.name = Faker::TvShows::GameOfThrones.character
